@@ -1,7 +1,7 @@
-Meteor.publishComposite("items", function() {
+Meteor.publishComposite("game", function() {
   return {
     find: function() {
-      return Items.find({});
+      return Games.find({});
     }
     // ,
     // children: [

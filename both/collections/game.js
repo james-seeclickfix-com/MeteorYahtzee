@@ -1,12 +1,15 @@
 // Define Collection
-Items = new Mongo.Collection('items');
+Games = new Mongo.Collection('game');
 
 // Collection Helpers https://github.com/dburles/meteor-collection-helpers
-Items.helpers({
+Games.helpers({
 
 });
 
 // Collection Hooks https://github.com/matb33/meteor-collection-hooks
-Items.before.insert(function (userId, doc) {
+Games.before.insert(function (userId, doc) {
   doc.createdAt = moment().toDate();
 });
+
+
+//db.game.insert('')

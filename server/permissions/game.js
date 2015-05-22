@@ -1,5 +1,5 @@
 // Permissions
-Items.allow({
+Games.allow({
   'insert': function(userId, doc) {
     return userId;
   },
