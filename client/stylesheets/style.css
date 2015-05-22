@@ -9,6 +9,13 @@ td {
     display: inline-flex;
 }
 
+.fselection {
+    background-color: red;
+    height: 30px;
+    width: 48px;
+    display: inline-flex;
+}
+
 .rowSelection {
     background-color:aliceblue;
     display: block;
@@ -16,4 +23,24 @@ td {
     height: 30px;
     margin: 5px;
     margin-left: 0px;
+}
+
+#total {
+    background-color: aquamarine;
+    height: 10px;
+    width: 10px;
+    display: inline;
+/*    float: left;*/
+
+}
+
+.test {
+    display: inline-flex;
+    background-color: aquamarine;
+    height: 50px;
+    width: 150px;   
+}
+
+img {
+    vertical-align: inherit;
 }

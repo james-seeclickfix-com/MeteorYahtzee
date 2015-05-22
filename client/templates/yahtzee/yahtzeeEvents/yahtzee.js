@@ -1,57 +1,4 @@
-Template.dashboard.events({
-    "click #roll": function (e) {
-        var gameSession = Games.findOne();
-        
-    if (gameSession.rolled < 3) {//3 inGame rerolls allowed
-        Games.update({_id:gameSession._id},{$inc:{rolled:1}})
-        Games.update({_id:gameSession._id},{$set:{isRolled:true}})
-        var r;
-        for (i = 0; i < 5; i++) {//loop through dice
-            var indicat = indic(i);
-            if (indicat != "X") {//if not held, then rerol
-                r = Math.floor((Math.random() * 6) + 1);
-                document.getElementById("d" + i).src = "/images/img/dice" + r + ".gif";
-            }
-        }
-    }
-        
-        function indic(arg) {//this looks for whether there is an X on the 6th char of string
-            var myimg = document.getElementById("d" + arg);
-            var nn = myimg.src.charAt(myimg.src.length - 6);
-            return nn;
-        }//used for the hold function
-},
-    
-    
-    "click #nG": function (e) {
-        
-        
-        var gameSession = Games.findOne();
-        Games.remove({_id:gameSession._id})
-        Games.insert({"score":0, "placementScore":[0,0,0,0,0,0,0,0,0,0,0,0], "placementDi":"00000", "rolled":0, "isRolled":false})
-        
-            for (i = 0; i < 5; i++) {//reset dice
-                document.getElementById("d" + i).src = "/images/img/dice0.gif";
-                console.log(i)
-            }
-    },
-    
-    "click .di": function (e, template) {
-        var thisButton = template.find(event.target)
-        var currHold = thisButton.getAttributeNode("src").value.substring(16,17);
-        var currVal = thisButton.getAttributeNode("src").value.slice(-5).substring(0,1);
-        console.log(currHold+" : "+currVal)
-        if(currVal!="0"){
-            if(currHold!="X"){
-                thisButton.getAttributeNode("src").value = "/images/img/diceX"+currVal+".gif";
-            }
-            else{
-                thisButton.getAttributeNode("src").value = "/images/img/dice"+currVal+".gif";
-            }
-        }
-        
-    },
-    
+Template.dashboard.events({    
     "mouseenter .rowSelection": function (e, template) {
         var gameSession = Games.findOne();
         if (gameSession.isRolled != false) {
@@ -69,7 +16,6 @@ Template.dashboard.events({
     var tt = document.getElementById("s14");
     var total = 0;
     var nn;
-    var temp;
                                                         
                                                         
     for (var i = 0; i < 5; i++) {
@@ -167,23 +113,10 @@ Template.dashboard.events({
         
     var gameSession = Games.findOne();
     var place = gameSession.placementScore;
-                                                        
-                                                        
-    
-                                                        
-                                                        
+                                                                                                  
     var dd = document.getElementById("s"+p);
     var tt = document.getElementById("s14");
-    var total = 0;
-    var nn;
-    var temp;
                                                         
-                                                        
-    for (var i = 0; i < 5; i++) {
-        nn = locInt(i);
-        if (nn == p) total += nn;
-    }
-    var global = gameSession.score + total;
         if (p == "1" && place[0] != 1) {
             dd.innerHTML = "";
             tt.innerHTML = gameSession.score;
@@ -243,18 +176,11 @@ Template.dashboard.events({
         if (gameSession.isRolled != false) {
     var thisButton = template.find(event.target)
     var p = thisButton.getAttributeNode("id").value;
-        
-    var place = gameSession.placementScore;
-                                                        
-                                                        
-    
-                                                        
-                                                        
+    var place = gameSession.placementScore;                                            
     var dd = document.getElementById("s"+p);
     var tt = document.getElementById("s14");
     var total = 0;
     var nn;
-    var temp;
                                                         
                                                         
     for (var i = 0; i < 5; i++) {
@@ -267,9 +193,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = gameSession.score + total;
             place[0] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
             
         }
@@ -277,45 +201,35 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = gameSession.score + total;
             place[1] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "3" && place[2] != 1) {
             dd.innerHTML = total;
             tt.innerHTML = gameSession.score + total;
             place[2] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "4" && place[3] != 1) {
             dd.innerHTML = total;
             tt.innerHTML = gameSession.score + total;
             place[3] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "5" && place[4] != 1) {
             dd.innerHTML = total;
             tt.innerHTML = gameSession.score + total;
             place[4] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "6" && place[5] != 1) {
             dd.innerHTML = total;
             tt.innerHTML = gameSession.score + total;
             place[5] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "7" && place[6] != 1) {
@@ -324,9 +238,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[6] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "8" && place[7] != 1) {
@@ -335,9 +247,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[7] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "9" && place[8] != 1) {
@@ -349,9 +259,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[8] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "10" && place[9] != 1) {
@@ -363,9 +271,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[9] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "11" && place[10] != 1) {
@@ -377,9 +283,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[10] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "12" && place[11] != 1) {
@@ -391,9 +295,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[11] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
         if (p == "13" && place[12] != 1) {
@@ -402,9 +304,7 @@ Template.dashboard.events({
             dd.innerHTML = total;
             tt.innerHTML = global;
             place[12] = "1";
-            Games.update({_id:gameSession._id}, {$set:{placementScore:place}})
-            Games.update({_id:gameSession._id}, {$set:{score:global}})
-            Games.update({_id:gameSession._id},{$set:{isRolled:false}})
+            Games.update({_id:gameSession._id}, {$set:{placementScore:place,score:global,isRolled:false,rolled:0}})
             reroll()
         }
     }
@@ -469,12 +369,6 @@ function sorter() {
 function locInt(arg) {
     myimg = document.getElementById("d" + arg);
     nn = parseInt(myimg.src.charAt(myimg.src.length - 5));
-    return nn;
-}
-
-function locStr(arg) {
-    var myimg = document.getElementById("d" + arg);
-    var nn = myimg.src.charAt(myimg.src.length - 5);
     return nn;
 }
 

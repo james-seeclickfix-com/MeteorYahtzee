@@ -1,18 +1,21 @@
+
 <template name="dashboard">
   <div class="template-dashboard">
     <div class="page-header">
-      <h1>Yahtzee</h1>
-
+        <h1>Username : {{getScore}}</h1>
       <div class="page-actions pull-right">
         <btn class="btn btn-primary" id="roll">Roll Dice</btn>
         <btn class="btn btn-primary" id="nG">New Game</btn>
       </div>
-        
+        </div>
+      <div id="diceContainer">
         <img value="0" class="di" id=d0 src="/images/img/dice0.gif">
         <img value="1" class="di" id=d1 src="/images/img/dice0.gif">
         <img value="2" class="di" id=d2 src="/images/img/dice0.gif">
         <img value="3" class="di" id=d3 src="/images/img/dice0.gif">
         <img value="4" class="di" id=d4 src="/images/img/dice0.gif">
+      <div class="test"></div>
+      </div>
         <br>
         
         <div class="rowSelection" id="1"><div id="s1" class="selection"></div>1's</div>
@@ -25,11 +28,9 @@
         <div class="rowSelection" id="8"><div id="s8" class="selection"></div>4ofKind</div>
         <div class="rowSelection" id="9"><div id="s9" class="selection"></div>fullHouse</div>
         <div class="rowSelection" id="10"><div id="s10" class="selection"></div>smallStraight</div>
-        <div class="rowSelection" id="11"><div id="s11" class="selection"></div>largeString</div>
+        <div class="rowSelection" id="11"><div id="s11" class="selection"></div>largeStraight</div>
         <div class="rowSelection" id="12"><div id="s12" class="selection"></div>yahtzee</div>
         <div class="rowSelection" id="13"><div id="s13" class="selection"></div>chance</div>
-        <div class="rowSelection" id="14"><div id="s14" class="selection"></div>Total.</div>
-
-    </div>
+        <div class="rowSelection" id="14"><div id="s14" class="selection">0</div>Total.</div>
   </div>
 </template>
